@@ -9,6 +9,10 @@
   var canvas = document.getElementById('waveCanvas');
   var ctx = canvas.getContext('2d');
 
+  function msg(key, params) {
+    return window.I18N ? window.I18N.t(key, params) : key;
+  }
+
   var COLOR_SIGNAL = '#37B6A6';
   var COLOR_ALIAS = '#E2574C';
   var COLOR_SAMPLE = '#F2B705';
@@ -60,22 +64,24 @@
     nyquistOut.textContent = round1(res.nyquist) + ' Hz';
 
     if (res.isAliased) {
-      statusMsg.textContent = 'Aliasing \u2014 appears as ' + round1(res.alias) + ' Hz instead of ' + fSignal + ' Hz';
+      statusMsg.textContent = msg('status.aliased', { alias: round1(res.alias), signal: fSignal });
       statusMsg.classList.remove('ok');
       statusMsg.classList.add('warn');
       aliasLegend.classList.add('show');
     } else {
-      statusMsg.textContent = 'No aliasing \u2014 signal is reconstructed correctly';
+      statusMsg.textContent = msg('status.ok');
       statusMsg.classList.remove('warn');
       statusMsg.classList.add('ok');
       aliasLegend.classList.remove('show');
     }
 
-    canvas.setAttribute(
-      'aria-label',
-      'Oscilloscope view: a ' + fSignal + ' hertz signal sampled at ' + fSample + ' hertz, ' +
-      (res.isAliased ? 'aliased to ' + round1(res.alias) + ' hertz' : 'no aliasing')
-    );
+    canvas.setAttribute('aria-label', msg('canvas.aria.state', {
+      signal: fSignal,
+      sample: fSample,
+      verdict: res.isAliased
+        ? msg('canvas.aria.aliased', { alias: round1(res.alias) })
+        : msg('canvas.aria.clean')
+    }));
 
     var rect = resize();
     var w = rect.width, h = rect.height;
@@ -135,5 +141,10 @@
   sigSlider.addEventListener('input', draw);
   sampSlider.addEventListener('input', draw);
   window.addEventListener('resize', draw);
+
+  if (window.I18N) {
+    window.I18N.init();
+    window.I18N.onChange(draw);
+  }
   draw();
 })();

@@ -21,12 +21,14 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'IBM Plex Sans', 'IBM Plex Sans Thai', system-ui, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
 .mono { font-family: 'IBM Plex Mono', monospace; }
+
+:lang(th) { line-height: 1.75; }
 
 .page {
   max-width: 680px;
@@ -36,10 +38,50 @@ body {
 
 .hero { margin-bottom: 2.5rem; }
 
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
 .kicker {
   font-size: 0.8125rem;
   color: var(--ink-soft);
-  margin: 0 0 0.5rem;
+  margin: 0;
+}
+
+.lang-switch {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.lang-switch a {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  text-decoration: none;
+  background: var(--paper);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.lang-switch a + a { border-left: 1px solid var(--border); }
+.lang-switch a:hover { background: var(--paper-alt); color: var(--ink); }
+
+.lang-switch a.is-active {
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.lang-switch a:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: -2px;
 }
 
 h1 {

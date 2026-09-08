@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ssupawat.github.io/aliasing-demo/sitemap.xml

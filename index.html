@@ -3,33 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aliasing in sampling</title>
-<meta name="description" content="Interactive demonstration of the sampling theorem and the aliasing effect.">
+<title>Aliasing in sampling — interactive Nyquist demo</title>
+<meta name="description" content="Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#14171A">
+
+<link rel="canonical" href="https://ssupawat.github.io/aliasing-demo/">
+<link rel="alternate" hreflang="en" href="https://ssupawat.github.io/aliasing-demo/">
+<link rel="alternate" hreflang="th" href="https://ssupawat.github.io/aliasing-demo/?lang=th">
+<link rel="alternate" hreflang="x-default" href="https://ssupawat.github.io/aliasing-demo/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aliasing in sampling">
+<meta property="og:url" content="https://ssupawat.github.io/aliasing-demo/">
+<meta property="og:title" content="Aliasing in sampling — interactive Nyquist demo">
+<meta property="og:description" content="Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.">
+<meta property="og:image" content="https://ssupawat.github.io/aliasing-demo/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="An oscilloscope trace showing a sine wave, its sample points, and the lower-frequency alias drawn through them.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="th_TH">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aliasing in sampling — interactive Nyquist demo">
+<meta name="twitter:description" content="Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.">
+<meta name="twitter:image" content="https://ssupawat.github.io/aliasing-demo/og-image.png">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://ssupawat.github.io/aliasing-demo/#website",
+      "url": "https://ssupawat.github.io/aliasing-demo/",
+      "name": "Aliasing in sampling",
+      "inLanguage": ["en", "th"]
+    },
+    {
+      "@type": ["WebPage", "LearningResource"],
+      "@id": "https://ssupawat.github.io/aliasing-demo/#webpage",
+      "url": "https://ssupawat.github.io/aliasing-demo/",
+      "isPartOf": { "@id": "https://ssupawat.github.io/aliasing-demo/#website" },
+      "name": "Aliasing in sampling — interactive Nyquist demo",
+      "description": "Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.",
+      "inLanguage": ["en", "th"],
+      "learningResourceType": "Interactive simulation",
+      "isAccessibleForFree": true,
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ssupawat.github.io/aliasing-demo/og-image.png",
+        "width": 1200,
+        "height": 630
+      },
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Nyquist–Shannon sampling theorem",
+          "sameAs": "https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem"
+        },
+        {
+          "@type": "Thing",
+          "name": "Aliasing",
+          "sameAs": "https://en.wikipedia.org/wiki/Aliasing"
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <main class="page">
   <header class="hero">
-    <p class="kicker mono">signal processing</p>
-    <h1>Aliasing in sampling</h1>
-    <p class="lede">When the sampling rate falls below twice the signal frequency &mdash; the Nyquist rate &mdash; the resulting samples are indistinguishable from those of a different, lower-frequency wave. This page demonstrates that effect directly.</p>
+    <div class="hero-top">
+      <p class="kicker mono" data-i18n="hero.kicker">signal processing</p>
+      <nav class="lang-switch" data-i18n-aria-label="lang.group" aria-label="Language">
+        <a href="?lang=en" hreflang="en" data-lang-option="en" data-i18n="lang.en" data-i18n-title="lang.en.title" title="Read this page in English">EN</a>
+        <a href="?lang=th" hreflang="th" data-lang-option="th" data-i18n="lang.th" data-i18n-title="lang.th.title" title="อ่านหน้านี้เป็นภาษาไทย">ไทย</a>
+      </nav>
+    </div>
+    <h1 data-i18n="hero.title">Aliasing in sampling</h1>
+    <p class="lede" data-i18n-html="hero.lede">When the sampling rate falls below twice the signal frequency &mdash; the Nyquist rate &mdash; the resulting samples are indistinguishable from those of a different, lower-frequency wave. This page demonstrates that effect directly.</p>
   </header>
 
-  <section class="scope-section" aria-label="Interactive sampling demonstration">
+  <section class="scope-section" data-i18n-aria-label="demo.aria" aria-label="Interactive sampling demonstration">
     <div class="controls">
       <div class="control">
         <div class="control-row">
-          <label for="sigFreq">Signal frequency</label>
+          <label for="sigFreq" data-i18n="control.signalFrequency">Signal frequency</label>
           <span class="readout mono"><span id="sigFreqOut">3</span> Hz</span>
         </div>
         <input type="range" id="sigFreq" min="1" max="15" step="1" value="3">
       </div>
       <div class="control">
         <div class="control-row">
-          <label for="sampRate">Sample rate</label>
+          <label for="sampRate" data-i18n="control.sampleRate">Sample rate</label>
           <span class="readout mono"><span id="sampRateOut">10</span> Hz</span>
         </div>
         <input type="range" id="sampRate" min="4" max="20" step="1" value="10">
@@ -37,7 +114,7 @@
     </div>
 
     <div class="scope">
-      <div class="scope-label">time domain</div>
+      <div class="scope-label" data-i18n="scope.label">time domain</div>
       <canvas id="waveCanvas" role="img" aria-label="Oscilloscope view of the sampled waveform"></canvas>
       <div class="scope-axis scope-axis-left">0s</div>
       <div class="scope-axis scope-axis-right">1s</div>
@@ -45,43 +122,44 @@
 
     <div class="status-panel">
       <div class="status-row">
-        <span>Nyquist frequency</span>
+        <span data-i18n="status.nyquist">Nyquist frequency</span>
         <span id="nyquistOut" class="mono">5 Hz</span>
       </div>
       <div id="statusMsg" class="status-msg ok">No aliasing &mdash; signal is reconstructed correctly</div>
     </div>
 
     <div class="legend">
-      <span class="legend-item"><span class="swatch swatch-signal"></span>True signal</span>
-      <span class="legend-item"><span class="swatch swatch-sample"></span>Samples</span>
-      <span class="legend-item legend-alias" id="aliasLegend"><span class="swatch swatch-alias"></span>Perceived signal</span>
+      <span class="legend-item"><span class="swatch swatch-signal"></span><span data-i18n="legend.signal">True signal</span></span>
+      <span class="legend-item"><span class="swatch swatch-sample"></span><span data-i18n="legend.samples">Samples</span></span>
+      <span class="legend-item legend-alias" id="aliasLegend"><span class="swatch swatch-alias"></span><span data-i18n="legend.alias">Perceived signal</span></span>
     </div>
   </section>
 
   <section class="reference">
-    <h2>The Nyquist condition</h2>
-    <p>For a signal band-limited to a maximum frequency <span class="mono">f_max</span>, exact reconstruction from its samples requires a sampling rate <span class="mono">f_s &gt; 2&middot;f_max</span>. Half the sampling rate, <span class="mono">f_s / 2</span>, is the Nyquist frequency: the highest frequency that can be represented without ambiguity.</p>
-    <p>A component above the Nyquist frequency does not disappear &mdash; it reappears at a lower, folded frequency. For a signal frequency <span class="mono">f</span> sampled at <span class="mono">f_s</span>:</p>
+    <h2 data-i18n="ref.nyquist.title">The Nyquist condition</h2>
+    <p data-i18n-html="ref.nyquist.p1">For a signal band-limited to a maximum frequency <span class="mono">f_max</span>, exact reconstruction from its samples requires a sampling rate <span class="mono">f_s &gt; 2&middot;f_max</span>. Half the sampling rate, <span class="mono">f_s / 2</span>, is the Nyquist frequency: the highest frequency that can be represented without ambiguity.</p>
+    <p data-i18n-html="ref.nyquist.p2">A component above the Nyquist frequency does not disappear &mdash; it reappears at a lower, folded frequency. For a signal frequency <span class="mono">f</span> sampled at <span class="mono">f_s</span>:</p>
     <div class="formula">
       <div class="formula-line"><span class="mono">r = f mod f_s</span></div>
-      <div class="formula-line"><span class="mono">f_alias = r</span><span class="formula-cond">if r &le; f_s / 2</span></div>
-      <div class="formula-line"><span class="mono">f_alias = f_s &minus; r</span><span class="formula-cond">otherwise</span></div>
+      <div class="formula-line"><span class="mono">f_alias = r</span><span class="formula-cond" data-i18n="formula.if">if r &le; f_s / 2</span></div>
+      <div class="formula-line"><span class="mono">f_alias = f_s &minus; r</span><span class="formula-cond" data-i18n="formula.otherwise">otherwise</span></div>
     </div>
   </section>
 
   <section class="reference">
-    <h2>Where it shows up</h2>
+    <h2 data-i18n="ref.examples.title">Where it shows up</h2>
     <ul class="examples">
-      <li><span class="example-term">Audio</span> &mdash; a digital-to-analog converter samples above the audible range, but frequencies above its Nyquist limit fold into audible artifacts unless removed first by an analog anti-aliasing filter.</li>
-      <li><span class="example-term">Video</span> &mdash; the wagon-wheel effect: a wheel's spokes appear to slow, stop, or reverse when their rotation frequency approaches the frame rate.</li>
-      <li><span class="example-term">Imaging</span> &mdash; a camera sensor sampling a fine repeating pattern, such as a woven fabric, can produce moir&eacute; interference that isn't present in the original scene.</li>
+      <li><span class="example-term" data-i18n="ex.audio.term">Audio</span> &mdash; <span data-i18n="ex.audio.body">a digital-to-analog converter samples above the audible range, but frequencies above its Nyquist limit fold into audible artifacts unless removed first by an analog anti-aliasing filter.</span></li>
+      <li><span class="example-term" data-i18n="ex.video.term">Video</span> &mdash; <span data-i18n="ex.video.body">the wagon-wheel effect: a wheel's spokes appear to slow, stop, or reverse when their rotation frequency approaches the frame rate.</span></li>
+      <li><span class="example-term" data-i18n="ex.imaging.term">Imaging</span> &mdash; <span data-i18n="ex.imaging.body">a camera sensor sampling a fine repeating pattern, such as a woven fabric, can produce moir&eacute; interference that isn't present in the original scene.</span></li>
     </ul>
   </section>
 
   <footer class="footer">
-    <p>Static page &mdash; sampling and aliasing logic runs entirely in the browser.</p>
+    <p data-i18n="footer.text">Static page &mdash; sampling and aliasing logic runs entirely in the browser.</p>
   </footer>
 </main>
+<script src="i18n.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
