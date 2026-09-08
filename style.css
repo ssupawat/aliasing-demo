@@ -275,6 +275,22 @@ input[type="range"] {
   color: var(--ink-soft);
 }
 
+.footer p { margin: 0; }
+
+/* Links back to the site index, so this page is not an island for readers
+   or for crawlers. */
+.footer-home {
+  margin-top: 0.5rem !important;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.footer-home a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.footer-home a:hover { color: var(--ink); }
+
 @media (min-width: 720px) {
   .page { padding: 4.5rem 2rem 5rem; }
   .scope { height: 280px; }
