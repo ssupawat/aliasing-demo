@@ -211,14 +211,17 @@
 
   function init() {
     current = detect();
-    applyToDom();
 
+    // Wired up before applyToDom: if painting ever throws, the links must still
+    // switch (they fall back to a normal ?lang= navigation only if this fails).
     document.querySelectorAll('[data-lang-option]').forEach(function (el) {
       el.addEventListener('click', function (event) {
         event.preventDefault();
         setLang(el.getAttribute('data-lang-option'));
       });
     });
+
+    applyToDom();
   }
 
   global.I18N = {
