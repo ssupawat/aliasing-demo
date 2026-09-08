@@ -25,7 +25,10 @@ Strings rendered from JavaScript (the status line and the canvas description) go
 
 ### Thai terminology
 
-Where Thai technical writing transliterates a term rather than translating it, the Thai strings follow that usage: `เอเลียซิง` (aliasing), `แซมเปิล` (samples), `ฟิลเตอร์แอนติเอเลียซิง` (anti-aliasing filter), `เฟรมเรต` (frame rate), alongside the already-established `ไนควิสต์`, `ออสซิลโลสโคป`, `แอนะล็อก`, and `มัวเร`. Terms that have a settled native Thai form — `การสุ่มตัวอย่าง` (sampling), `ความถี่ไนควิสต์` (Nyquist frequency) — are kept translated. The English word is carried in parentheses on first mention, which also keeps the page findable by searchers using either form.
+English technical terms are written in Latin script inside the Thai copy rather than transliterated into Thai script — `aliasing`, `Nyquist`, `sample rate`, `anti-aliasing filter`, `frame rate`, `oversampling`, `ADC`, `DAC`, `analog`, `digital` — which is how Thai engineering writing generally handles them, and keeps the page findable under the English terms. Concepts with a settled Thai form stay Thai: การสุ่มตัวอย่าง (sampling), ความถี่สัญญาณ (signal frequency), การประมวลผลสัญญาณ (signal processing).
+
+Mixed-script lines rely on the font stack in `style.css`: Latin resolves to IBM Plex Sans, Thai falls through to IBM Plex Sans Thai, so the two stay visually matched.
+
 
 ## SEO
 

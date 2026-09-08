@@ -221,6 +221,49 @@ input[type="range"] {
 .examples li { color: var(--ink-soft); border-left: 2px solid var(--border); padding-left: 0.875rem; }
 .example-term { color: var(--ink); font-weight: 500; }
 
+.consequences {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  counter-reset: hw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.consequences li {
+  counter-increment: hw;
+  position: relative;
+  padding-left: 2.375rem;
+}
+
+.consequences li::before {
+  content: counter(hw);
+  position: absolute;
+  left: 0;
+  top: 0.125rem;
+  width: 1.625rem;
+  height: 1.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  background: var(--paper-alt);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+}
+
+.consequences h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin: 0 0 0.375rem;
+}
+
+.reference .consequences p { margin: 0; }
+
 .footer {
   border-top: 1px solid var(--border);
   padding-top: 1.25rem;

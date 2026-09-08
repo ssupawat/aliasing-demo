@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aliasing in sampling — interactive Nyquist demo</title>
-<meta name="description" content="Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.">
+<meta name="description" content="Interactive demo of the sampling theorem and aliasing: see when a wave folds into a false lower frequency, and why that shapes the hardware ahead of every ADC.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#14171A">
@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Aliasing in sampling">
 <meta property="og:url" content="https://ssupawat.github.io/aliasing-demo/">
 <meta property="og:title" content="Aliasing in sampling — interactive Nyquist demo">
-<meta property="og:description" content="Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.">
+<meta property="og:description" content="Interactive demo of the sampling theorem and aliasing: see when a wave folds into a false lower frequency, and why that shapes the hardware ahead of every ADC.">
 <meta property="og:image" content="https://ssupawat.github.io/aliasing-demo/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -28,7 +28,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Aliasing in sampling — interactive Nyquist demo">
-<meta name="twitter:description" content="Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.">
+<meta name="twitter:description" content="Interactive demo of the sampling theorem and aliasing: see when a wave folds into a false lower frequency, and why that shapes the hardware ahead of every ADC.">
 <meta name="twitter:image" content="https://ssupawat.github.io/aliasing-demo/og-image.png">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -54,7 +54,7 @@
       "url": "https://ssupawat.github.io/aliasing-demo/",
       "isPartOf": { "@id": "https://ssupawat.github.io/aliasing-demo/#website" },
       "name": "Aliasing in sampling — interactive Nyquist demo",
-      "description": "Interactive demonstration of the sampling theorem and the aliasing effect. Adjust the signal frequency and sample rate to see exactly when a wave folds into a lower, false frequency.",
+      "description": "Interactive demo of the sampling theorem and aliasing: see when a wave folds into a false lower frequency, and why that shapes the hardware ahead of every ADC.",
       "inLanguage": ["en", "th"],
       "learningResourceType": "Interactive simulation",
       "isAccessibleForFree": true,
@@ -153,6 +153,29 @@
       <li><span class="example-term" data-i18n="ex.video.term">Video</span> &mdash; <span data-i18n="ex.video.body">the wagon-wheel effect: a wheel's spokes appear to slow, stop, or reverse when their rotation frequency approaches the frame rate.</span></li>
       <li><span class="example-term" data-i18n="ex.imaging.term">Imaging</span> &mdash; <span data-i18n="ex.imaging.body">a camera sensor sampling a fine repeating pattern, such as a woven fabric, can produce moir&eacute; interference that isn't present in the original scene.</span></li>
     </ul>
+  </section>
+
+  <section class="reference">
+    <h2 data-i18n="ref.hardware.title">What it forces the hardware to do</h2>
+    <p data-i18n="ref.hardware.intro">Aliasing is not a rounding error to be cleaned up later. Once two frequencies land on the same samples, nothing downstream can tell them apart, so the fix has to sit in front of the converter &mdash; in hardware. That one constraint shapes most of an analog front end.</p>
+    <ol class="consequences">
+      <li>
+        <h3 data-i18n="hw.filter.term">The anti-aliasing filter is analog, and it comes first</h3>
+        <p data-i18n="hw.filter.body">No amount of DSP separates a folded frequency from a real one, so the filter has to remove it before the sampler ever sees it. That means a physical low-pass on the board &mdash; op-amps, resistors, capacitors &mdash; costing area, power, and some phase distortion near the band edge. It is also why a 100 Hz control loop still needs one: an ADC&rsquo;s input bandwidth is usually far wider than its sample rate, so 20 kHz motor PWM noise reaches the sampler and folds straight into the band you are trying to regulate.</p>
+      </li>
+      <li>
+        <h3 data-i18n="hw.rate.term">The filter picks the sample rate, not Nyquist</h3>
+        <p data-i18n="hw.rate.body">Nyquist allows 40 kHz for 20 kHz audio; CDs use 44.1 kHz. That extra 4.1 kHz of rate buys 2.05 kHz of transition band, because a real filter cannot fall from passband to stopband instantly. Raise the sample rate and the analog filter gets gentler and cheaper; lower it and the filter gets steep, expensive, and phase-ugly &mdash; or you alias. Every converter datasheet is a point chosen on that trade.</p>
+      </li>
+      <li>
+        <h3 data-i18n="hw.oversampling.term">Oversampling moves the hard part into the digital domain</h3>
+        <p data-i18n="hw.oversampling.body">Sigma-delta converters sample at megahertz rates so the analog anti-aliasing filter can be a single resistor and capacitor. The steep filtering then happens digitally, before decimating back down to the output rate, where it is exact, repeatable, and costs only gates. Trading analog precision for digital filtering is the default in modern audio and instrumentation front ends.</p>
+      </li>
+      <li>
+        <h3 data-i18n="hw.undersampling.term">Sometimes the fold is the feature</h3>
+        <p data-i18n="hw.undersampling.body">Bandpass sampling aliases on purpose: a 70 MHz IF sampled at 25 MSPS lands at 5 MHz, already down at baseband. Direct-RF receivers and software-defined radios use this to delete an entire mixer stage. The anti-aliasing filter becomes a band-pass admitting exactly one band, so only the wanted signal folds &mdash; and the ADC&rsquo;s input bandwidth, not its sample rate, becomes the spec that matters.</p>
+      </li>
+    </ol>
   </section>
 
   <footer class="footer">
