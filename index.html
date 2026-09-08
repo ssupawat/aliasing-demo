@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aliasing in sampling</title>
+<meta name="description" content="Interactive demonstration of the sampling theorem and the aliasing effect.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <p class="kicker mono">signal processing</p>
+    <h1>Aliasing in sampling</h1>
+    <p class="lede">When the sampling rate falls below twice the signal frequency &mdash; the Nyquist rate &mdash; the resulting samples are indistinguishable from those of a different, lower-frequency wave. This page demonstrates that effect directly.</p>
+  </header>
+
+  <section class="scope-section" aria-label="Interactive sampling demonstration">
+    <div class="controls">
+      <div class="control">
+        <div class="control-row">
+          <label for="sigFreq">Signal frequency</label>
+          <span class="readout mono"><span id="sigFreqOut">3</span> Hz</span>
+        </div>
+        <input type="range" id="sigFreq" min="1" max="15" step="1" value="3">
+      </div>
+      <div class="control">
+        <div class="control-row">
+          <label for="sampRate">Sample rate</label>
+          <span class="readout mono"><span id="sampRateOut">10</span> Hz</span>
+        </div>
+        <input type="range" id="sampRate" min="4" max="20" step="1" value="10">
+      </div>
+    </div>
+
+    <div class="scope">
+      <div class="scope-label">time domain</div>
+      <canvas id="waveCanvas" role="img" aria-label="Oscilloscope view of the sampled waveform"></canvas>
+      <div class="scope-axis scope-axis-left">0s</div>
+      <div class="scope-axis scope-axis-right">1s</div>
+    </div>
+
+    <div class="status-panel">
+      <div class="status-row">
+        <span>Nyquist frequency</span>
+        <span id="nyquistOut" class="mono">5 Hz</span>
+      </div>
+      <div id="statusMsg" class="status-msg ok">No aliasing &mdash; signal is reconstructed correctly</div>
+    </div>
+
+    <div class="legend">
+      <span class="legend-item"><span class="swatch swatch-signal"></span>True signal</span>
+      <span class="legend-item"><span class="swatch swatch-sample"></span>Samples</span>
+      <span class="legend-item legend-alias" id="aliasLegend"><span class="swatch swatch-alias"></span>Perceived signal</span>
+    </div>
+  </section>
+
+  <section class="reference">
+    <h2>The Nyquist condition</h2>
+    <p>For a signal band-limited to a maximum frequency <span class="mono">f_max</span>, exact reconstruction from its samples requires a sampling rate <span class="mono">f_s &gt; 2&middot;f_max</span>. Half the sampling rate, <span class="mono">f_s / 2</span>, is the Nyquist frequency: the highest frequency that can be represented without ambiguity.</p>
+    <p>A component above the Nyquist frequency does not disappear &mdash; it reappears at a lower, folded frequency. For a signal frequency <span class="mono">f</span> sampled at <span class="mono">f_s</span>:</p>
+    <div class="formula">
+      <div class="formula-line"><span class="mono">r = f mod f_s</span></div>
+      <div class="formula-line"><span class="mono">f_alias = r</span><span class="formula-cond">if r &le; f_s / 2</span></div>
+      <div class="formula-line"><span class="mono">f_alias = f_s &minus; r</span><span class="formula-cond">otherwise</span></div>
+    </div>
+  </section>
+
+  <section class="reference">
+    <h2>Where it shows up</h2>
+    <ul class="examples">
+      <li><span class="example-term">Audio</span> &mdash; a digital-to-analog converter samples above the audible range, but frequencies above its Nyquist limit fold into audible artifacts unless removed first by an analog anti-aliasing filter.</li>
+      <li><span class="example-term">Video</span> &mdash; the wagon-wheel effect: a wheel's spokes appear to slow, stop, or reverse when their rotation frequency approaches the frame rate.</li>
+      <li><span class="example-term">Imaging</span> &mdash; a camera sensor sampling a fine repeating pattern, such as a woven fabric, can produce moir&eacute; interference that isn't present in the original scene.</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <p>Static page &mdash; sampling and aliasing logic runs entirely in the browser.</p>
+  </footer>
+</main>
+<script src="script.js"></script>
+</body>
+</html>

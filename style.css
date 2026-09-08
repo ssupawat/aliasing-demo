@@ -1,0 +1,192 @@
+:root {
+  --ink: #17181A;
+  --ink-soft: #52565B;
+  --paper: #FFFFFF;
+  --paper-alt: #F2F1ED;
+  --border: #DEDCD4;
+  --scope-bg: #14171A;
+  --scope-grid: #262B30;
+  --scope-axis: #3A3F45;
+  --scope-label: #8B9096;
+  --signal: #37B6A6;
+  --alias: #E2574C;
+  --sample: #F2B705;
+  --ok: #1E8E5A;
+  --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono { font-family: 'IBM Plex Mono', monospace; }
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.hero { margin-bottom: 2.5rem; }
+
+.kicker {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  margin: 0 0 0.5rem;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.lede {
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+  max-width: 58ch;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.scope-section {
+  background: var(--paper-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.controls { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.5rem; }
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.9375rem;
+  margin-bottom: 0.375rem;
+}
+
+.control-row label { color: var(--ink-soft); }
+
+.readout { font-weight: 500; }
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--signal);
+}
+
+.scope {
+  position: relative;
+  background: var(--scope-bg);
+  background-image:
+    linear-gradient(var(--scope-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--scope-grid) 1px, transparent 1px);
+  background-size: 12.5% 20%;
+  border-radius: var(--radius);
+  height: 220px;
+  overflow: hidden;
+}
+
+.scope canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.scope-label {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6875rem;
+  color: var(--scope-label);
+  z-index: 2;
+}
+
+.scope-axis {
+  position: absolute;
+  bottom: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6875rem;
+  color: var(--scope-label);
+  z-index: 2;
+}
+.scope-axis-left { left: 10px; }
+.scope-axis-right { right: 10px; }
+
+.status-panel {
+  margin-top: 1.25rem;
+  padding: 0.875rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9375rem;
+  margin-bottom: 0.375rem;
+  color: var(--ink-soft);
+}
+
+.status-msg { font-weight: 500; }
+.status-msg.ok { color: var(--ok); }
+.status-msg.warn { color: var(--alias); }
+
+.legend {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-alias { display: none; }
+.legend-alias.show { display: flex; }
+
+.swatch { width: 14px; height: 2px; display: inline-block; }
+.swatch-signal { background: var(--signal); }
+.swatch-alias { border-top: 2px dashed var(--alias); }
+.swatch-sample { width: 8px; height: 8px; border-radius: 50%; background: var(--sample); }
+
+.reference { margin-bottom: 2.5rem; }
+.reference p { color: var(--ink-soft); margin: 0 0 1rem; max-width: 62ch; }
+
+.formula {
+  background: var(--paper-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+.formula-line { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.2rem 0; font-size: 0.9375rem; }
+.formula-cond { color: var(--ink-soft); font-size: 0.8125rem; }
+
+.examples { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.875rem; }
+.examples li { color: var(--ink-soft); border-left: 2px solid var(--border); padding-left: 0.875rem; }
+.example-term { color: var(--ink); font-weight: 500; }
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 720px) {
+  .page { padding: 4.5rem 2rem 5rem; }
+  .scope { height: 280px; }
+}
