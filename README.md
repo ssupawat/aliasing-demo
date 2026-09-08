@@ -23,6 +23,10 @@ To add or change wording, edit the `strings` table in `i18n.js`. Keys are wired 
 
 Strings rendered from JavaScript (the status line and the canvas description) go through `I18N.t(key, params)`, with `{placeholder}` substitution.
 
+### Thai terminology
+
+Where Thai technical writing transliterates a term rather than translating it, the Thai strings follow that usage: `เอเลียซิง` (aliasing), `แซมเปิล` (samples), `ฟิลเตอร์แอนติเอเลียซิง` (anti-aliasing filter), `เฟรมเรต` (frame rate), alongside the already-established `ไนควิสต์`, `ออสซิลโลสโคป`, `แอนะล็อก`, and `มัวเร`. Terms that have a settled native Thai form — `การสุ่มตัวอย่าง` (sampling), `ความถี่ไนควิสต์` (Nyquist frequency) — are kept translated. The English word is carried in parentheses on first mention, which also keeps the page findable by searchers using either form.
+
 ## SEO
 
 - Canonical URL plus `hreflang` alternates for `en`, `th`, and `x-default`
