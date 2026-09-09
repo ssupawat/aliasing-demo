@@ -53,5 +53,5 @@ The absolute URLs in `index.html`, `robots.txt`, and `sitemap.xml` are hard-code
 - `script.js` — sampling and aliasing calculations, canvas drawing
 - `i18n.js` — English/Thai string table and language switching
 - `og-image.png` — social sharing card
-- `favicon.svg` — site icon
+- `favicon.svg` — site icon; `favicon-32.png` and `apple-touch-icon.png` are rasterised from it for browsers that ignore SVG icons
 - `robots.txt`, `sitemap.xml` — crawler directives
